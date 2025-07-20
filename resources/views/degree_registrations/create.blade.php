@@ -189,7 +189,8 @@
                         <option value="BA (general) in english">BA (general) in english</option>
                         <option value="BSC in psychology and counseling">BSC in psychology and counseling</option>
                         <option value="BSc in cyber security and ethical hacking">BSc in cyber security and ethical hacking</option>
-                        <option value="BSc in computer science">BSc in computer science</option>
+                        <option value="BSc in computer science">BSc in computer science</option> 
+                        <option value="BSc in HRM and BS">BSc in HRM and BS</option>
                     </select>
                     @error('first_choice')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                 </div>

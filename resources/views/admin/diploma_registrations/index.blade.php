@@ -61,6 +61,7 @@
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $registration->register_id }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $registration->diploma_name }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $registration->full_name }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ $registration->gender }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $registration->national_id_number }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ \Carbon\Carbon::parse($registration->date_of_birth)->format('Y-m-d') }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $registration->email }}</td>

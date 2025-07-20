@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('degree_registrations', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
 
             // Registration Details (from the form)
             $table->string('register_id')->unique(); // Assuming register_id should be unique
@@ -38,12 +39,13 @@ return new class extends Migration
             $table->string('district');
 
             // Academic Information (from the form)
-            $table->string('student_id'); // Required based on form
+            $table->string('student_id')->nullable(); // Although required in form, nullable might be safer initially? Let's make it required based on form.
+             $table->string('student_id'); // Required based on form
             $table->string('medium');
             $table->string('guardian_name');
             $table->string('guardian_contact_number');
             $table->string('first_choice'); // Storing the selected program value
-            $table->string('degree_program_name'); // Auto-filled based on register_id
+            $table->string('degree_program_name')->after('first_choice'); 
 
             // File Upload Fields (Storing Paths) - Recommended to be nullable as files might not always exist
             $table->string('ol_result_sheet')->nullable();
@@ -54,7 +56,6 @@ return new class extends Migration
             $table->string('passport_photo')->nullable(); // 2x2 inch photo
             $table->string('payment_slip')->nullable(); // From your original fillable
 
-            $table->timestamps(); // Created at and updated at timestamps
         });
     }
 

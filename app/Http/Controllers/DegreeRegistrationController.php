@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DegreeRegistration;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DegreeRegistrationController extends Controller
 {
@@ -41,8 +42,16 @@ class DegreeRegistrationController extends Controller
             'country_birth' => 'required|string|max:255',
             'nationality' => 'required|string|max:255',
             'passport_number' => 'nullable|string|max:255', // Optional field
+            
             // Validate specific program values for the user's selected choice
-            'first_choice' => 'required|string|in:Bsc.IT.&Cs.,Bsc.IT.&Cys.',
+
+            'first_choice' => 'required|string|in:' . implode(',', [
+                'BA (general) in english',
+                'BSC in psychology and counseling',
+                'BSc in cyber security and ethical hacking',
+                'BSc in computer science',
+                'BSc in HRM and BS',
+            ]),
 
             // ✅ File Uploads Validation - Required as per form inputs
             'ol_result_sheet' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120', // 5MB max
@@ -61,6 +70,7 @@ class DegreeRegistrationController extends Controller
             'SITC/2025/3B/PC' => 'BSc in Psychology and Counseling',
             'SITC/2025/3B/CSY' => 'BSc in Cybersecurity and Ethical Hacking',
             'SITC/2025/3B/IT' => 'BSc in Computer Science',
+            'SITC/2025/1B/HR' => 'BSc in HRM and BS',
         ];
 
         $registerId = strtoupper($validated['register_id']);

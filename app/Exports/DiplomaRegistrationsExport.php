@@ -38,8 +38,10 @@ class DiplomaRegistrationsExport implements FromCollection, WithHeadings
             'register_id',
             'diploma_name',
             'full_name',
+            'name_with_initials',
             'national_id_number',
             'date_of_birth',
+            'gender',
             'email',
             'whatsapp_number',
             'created_at'
@@ -52,8 +54,10 @@ class DiplomaRegistrationsExport implements FromCollection, WithHeadings
             'Register ID',
             'Diploma',
             'Full Name',
+            'Name with Initials',
             'NIC',
             'DOB',
+            'Gender',
             'Email',
             'WhatsApp',
             'Submitted At'
