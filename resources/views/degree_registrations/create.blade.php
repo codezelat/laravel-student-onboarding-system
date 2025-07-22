@@ -158,7 +158,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> {{-- Increased gap for better spacing --}}
                 {{-- Added/Confirmed from new requirements --}}
                 <div>
-                    <label for="student_id" class="block text-sm font-medium text-gray-700 mb-1.5">Student ID (e.g., CBC 100, DIT 100) <span class="text-red-500">*</span></label>
+                    <label for="student_id" class="block text-sm font-medium text-gray-700 mb-1.5">Diploma Student ID (e.g., CBC 100, DIT 100) <span class="text-red-500">*</span></label>
                     <input type="text" name="student_id" id="student_id" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required>
                     @error('student_id')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                 </div>
@@ -207,7 +207,7 @@
                         'ol_result_sheet' => 'OL Result Sheet',
                         'al_result_sheet' => 'A/L Result Sheet',
                         'id_card_copy' => 'ID Card Copy',
-                        'it_certificate' => 'IT Certificate (Diploma)',
+                        'it_certificate' => 'Diploma Certificate',
                         'application_form' => 'Application Form (PSBU Application)',
                         'passport_photo' => 'Passport Size Photo (2x2 inch)',
                         'payment_slip' => 'Payment Slip', // Included as it was in your original loop
@@ -240,86 +240,6 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // --- Handle Register ID and Diploma Name ---
-    const registerIdField = document.querySelector('#register_id');
-    const diplomaNameField = document.querySelector('#diploma_name');
-    const diplomaNameDisplay = document.querySelector('#diplomaNameDisplay');
-    const diplomaNameContainer = document.querySelector('#diplomaNameContainer');
-    const initialDiplomaName = diplomaNameField.value; // From old input
-
-    const diplomaMap = {
-        'EN': 'Diploma in English (SITC/2025/2B/EN...)',
-        'HRM': 'Diploma in Human Resource Management and Administration (SITC/2025/2B/HR...)',
-        'BM': 'Diploma in Business Management (SITC/2025/2B/BM...)',
-        'SC': 'Diploma in Sociology (SITC/2025/2B/SC...)',
-        'PC': 'Diploma in Psychology and Counseling (SITC/2025/2B/PC...)',
-        'IT': 'Diploma in Information Technology (SITC/2025/2B/IT...)',
-        'CSY': 'Diploma in Cybersecurity and Ethical Hacking (SITC/2025/2B/CSY...)'
-    };
-
-    function updateDiplomaDisplay(value) {
-        const upperValue = value.toUpperCase();
-        let foundDiplomaName = '';
-        let bestMatchPrefix = '';
-
-        for (const prefix in diplomaMap) {
-            if (upperValue.startsWith(prefix) && prefix.length > bestMatchPrefix.length) {
-                bestMatchPrefix = prefix;
-            }
-        }
-        foundDiplomaName = bestMatchPrefix ? diplomaMap[bestMatchPrefix] : '';
-
-        diplomaNameField.value = foundDiplomaName;
-        diplomaNameDisplay.textContent = foundDiplomaName;
-
-        // Show/hide the container smoothly using height and opacity
-        if (foundDiplomaName) {
-            if (diplomaNameContainer.classList.contains('h-0')) {
-                diplomaNameContainer.classList.remove('opacity-0', 'h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-                diplomaNameContainer.classList.add('opacity-100', 'p-4', 'mt-2'); // Restore styles
-                // Force reflow before setting height for transition
-                void diplomaNameContainer.offsetWidth;
-                diplomaNameContainer.style.height = diplomaNameContainer.scrollHeight + 'px';
-            }
-        } else {
-            if (!diplomaNameContainer.classList.contains('h-0')) {
-                diplomaNameContainer.style.height = '0px';
-                diplomaNameContainer.classList.remove('opacity-100');
-                diplomaNameContainer.classList.add('opacity-0');
-
-                // After transition, fully hide
-                setTimeout(() => {
-                    if (!diplomaNameField.value) { // Check again
-                       diplomaNameContainer.classList.add('h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-                       diplomaNameContainer.classList.remove('p-4', 'mt-2');
-                    }
-                }, 300); // Match transition duration
-            }
-        }
-    }
-
-    // Initial check on page load
-    const initialRegisterIdValue = registerIdField.value;
-     if (initialDiplomaName) {
-         diplomaNameDisplay.textContent = initialDiplomaName;
-         diplomaNameContainer.classList.remove('opacity-0', 'h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-         diplomaNameContainer.classList.add('opacity-100', 'p-4', 'mt-2');
-         // Set height after ensuring it's visible
-         requestAnimationFrame(() => {
-            diplomaNameContainer.style.height = diplomaNameContainer.scrollHeight + 'px';
-         });
-     } else if (initialRegisterIdValue) {
-        updateDiplomaDisplay(initialRegisterIdValue);
-    } else {
-        // Ensure it starts fully hidden if no initial value
-        diplomaNameContainer.classList.add('opacity-0', 'h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-        diplomaNameContainer.style.height = '0px';
-    }
-
-    registerIdField.addEventListener('input', function () {
-        updateDiplomaDisplay(this.value);
-    });
-
     // --- Handle File Input Display ---
     const fileInput = document.getElementById('payment_slip');
     const fileNameDisplay = document.getElementById('file-name-display');

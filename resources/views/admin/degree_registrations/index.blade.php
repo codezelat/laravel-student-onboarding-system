@@ -99,7 +99,7 @@
                                                 <p><strong>Permanent Address:</strong> {{ $registration->permanent_address }}</p>
                                                 <p><strong>Postal Code:</strong> {{ $registration->postal_code }}</p>
                                                 <p><strong>District:</strong> {{ $registration->district }}</p>
-                                                <p><strong>Student ID:</strong> {{ $registration->student_id }}</p>
+                                                <p><strong>Dip Student ID:</strong> {{ $registration->student_id }}</p>
                                                 <p><strong>Medium:</strong> {{ $registration->medium }}</p>
                                                 <p><strong>First Choice:</strong> {{ $registration->first_choice }}</p>
                                                 <p><strong>Disability:</strong> {{ $registration->disability ?? 'N/A' }}</p>
@@ -117,7 +117,7 @@
                                                 <li><a href="{{ asset('storage/' . $registration->ol_result_sheet) }}" target="_blank" class="underline">O/L Result Sheet</a></li>
                                                 <li><a href="{{ asset('storage/' . $registration->al_result_sheet) }}" target="_blank" class="underline">A/L Result Sheet</a></li>
                                                 <li><a href="{{ asset('storage/' . $registration->id_card_copy) }}" target="_blank" class="underline">ID Card Copy</a></li>
-                                                <li><a href="{{ asset('storage/' . $registration->it_certificate) }}" target="_blank" class="underline">IT Certificate</a></li>
+                                                <li><a href="{{ asset('storage/' . $registration->it_certificate) }}" target="_blank" class="underline">Dip Certificate</a></li>
                                                 <li><a href="{{ asset('storage/' . $registration->application_form) }}" target="_blank" class="underline">Application Form</a></li>
                                                 <li><a href="{{ asset('storage/' . $registration->passport_photo) }}" target="_blank" class="underline">Passport Photo</a></li>
                                                 <li><a href="{{ asset('storage/' . $registration->payment_slip) }}" target="_blank" class="underline">Payment Slip</a></li>
