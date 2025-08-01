@@ -30,8 +30,12 @@ Route::get('/admin/dashboard', function () {
 Route::get('/diploma-register', [DiplomaRegistrationController::class, 'create'])->name('diploma.register');
 Route::post('/diploma-register', [DiplomaRegistrationController::class, 'store'])->name('diploma.register.store');
 
+Route::get('/diploma-register/{registerId}', [DiplomaRegistrationController::class, 'show'])->name('diploma.register.show');
+
 Route::get('/degree-register', [DegreeRegistrationController::class, 'create'])->name('degree.register');
 Route::post('/degree-register', [DegreeRegistrationController::class, 'store'])->name('degree.register.store');
+
+Route::get('/degree-register/{registerId}', [DegreeRegistrationController::class, 'show'])->name('degree.register.show');
 
 Route::get('/submit-exam-paper', [ExamPaperSubmissionController::class, 'create'])->name('exam.paper.create');
 Route::post('/submit-exam-paper', [ExamPaperSubmissionController::class, 'store'])->name('exam.paper.store');

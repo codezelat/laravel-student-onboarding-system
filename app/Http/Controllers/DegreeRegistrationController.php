@@ -180,4 +180,16 @@ class DegreeRegistrationController extends Controller
         // Or redirect to a dedicated confirmation page:
         // return redirect()->route('degree.registration.success')->with('success', 'Registration successful!');
     }
+
+    public function show($registerId)
+    {
+        $registration = DegreeRegistration::where('register_id', $registerId)->first();
+
+        if (!$registration) {
+            return redirect()->back()->withErrors(['register_id' => 'No registration found for this Register ID.']);
+        }
+
+        return view('degree_registrations.show', compact('registration'));
+    }
+
 }

@@ -91,4 +91,14 @@ class DiplomaRegistrationController extends Controller
         return redirect()->back()->with('success', 'Your registration has been submitted successfully!');
     }
 
+    public function show($registerId)
+    {
+        $registration = DiplomaRegistration::where('register_id', $registerId)->first();
+        
+        if (!$registration) {
+            return redirect()->back()->withErrors(['register_id' => 'No registration found for this Register ID.']);
+        }
+        return view('diploma_registrations.show', compact('registration'));
+    }
+
 }
