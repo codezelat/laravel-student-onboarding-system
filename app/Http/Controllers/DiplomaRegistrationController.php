@@ -93,12 +93,41 @@ class DiplomaRegistrationController extends Controller
 
     public function show($registerId)
     {
-        $registration = DiplomaRegistration::where('register_id', $registerId)->first();
-        
+        // Decode encoded slashes if any (e.g., SITC%2F2025%2F2B%2FEN09999 → SITC/2025/2B/EN09999)
+        $registerId = urldecode($registerId);
+
+        // Force strict match to prevent partial matches like EN09 → EN0
+        $registration = DiplomaRegistration::where('register_id', '=', $registerId)->first();
+
         if (!$registration) {
-            return redirect()->back()->withErrors(['register_id' => 'No registration found for this Register ID.']);
+            return redirect()->route('diploma.register.verify.form')->withErrors([
+                'register_id' => 'No registration found for the Register ID: ' . $registerId
+            ]);
         }
-        return view('diploma_registrations.show', compact('registration'));
+
+        return view('view_diploma_registrations.show', compact('registration'));
     }
+
+
+    public function verifyForm()
+    {
+        return view('view_diploma_registrations.verify');
+    }
+
+    public function verify(Request $request)
+    {
+        $validated = $request->validate([
+            'register_id' => 'required|string'
+        ]);
+
+        $exists = DiplomaRegistration::where('register_id', $validated['register_id'])->exists();
+
+        if (!$exists) {
+            return redirect()->back()->withInput()->withErrors(['register_id' => 'No registration found for this Register ID.']);
+        }
+
+        return redirect()->route('diploma.register.show', ['registerId' => $validated['register_id']]);
+    }
+
 
 }

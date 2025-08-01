@@ -183,13 +183,41 @@ class DegreeRegistrationController extends Controller
 
     public function show($registerId)
     {
-        $registration = DegreeRegistration::where('register_id', $registerId)->first();
+        // Decode in case register ID was passed as URL-encoded (e.g., SITC%2F2025%2F3B%2FIT001)
+        $registerId = urldecode($registerId);
+
+        // Force strict match to prevent fuzzy fallback
+        $registration = DegreeRegistration::where('register_id', '=', $registerId)->first();
 
         if (!$registration) {
-            return redirect()->back()->withErrors(['register_id' => 'No registration found for this Register ID.']);
+            return redirect()->route('degree.register.verify.form')->withErrors([
+                'register_id' => 'No registration found for the Register ID: ' . $registerId
+            ]);
         }
 
-        return view('degree_registrations.show', compact('registration'));
+        return view('view_degree_registrations.show', compact('registration'));
     }
+
+
+    public function verifyForm()
+    {
+        return view('view_degree_registrations.verify');
+    }
+
+    public function verify(Request $request)
+    {
+        $validated = $request->validate([
+            'register_id' => 'required|string'
+        ]);
+
+        $exists = DegreeRegistration::where('register_id', $validated['register_id'])->exists();
+
+        if (!$exists) {
+            return redirect()->back()->withInput()->withErrors(['register_id' => 'No registration found for this Register ID.']);
+        }
+
+        return redirect()->route('degree.register.show', ['registerId' => $validated['register_id']]);
+    }
+
 
 }
