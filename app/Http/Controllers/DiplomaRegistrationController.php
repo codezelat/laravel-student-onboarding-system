@@ -38,6 +38,7 @@ class DiplomaRegistrationController extends Controller
             'SITC/2025/2B/BM' => 'Diploma in Business Management',
             'SITC/2025/2B/SC' => 'Diploma in Sociology',
             'SITC/2025/2B/PC' => 'Diploma in Psychology and Counseling',
+            'SITC/2025/3B/PC' => 'Diploma in Psychology and Counseling - 3rd Batch',
             'SITC/2025/2B/IT' => 'Diploma in Information Technology',
             'SITC/2025/2B/CSY' => 'Diploma in Cybersecurity and Ethical Hacking',
         ];
