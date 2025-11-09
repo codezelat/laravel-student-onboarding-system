@@ -39,8 +39,7 @@ return new class extends Migration
             $table->string('district');
 
             // Academic Information (from the form)
-            $table->string('student_id')->nullable(); // Although required in form, nullable might be safer initially? Let's make it required based on form.
-             $table->string('student_id'); // Required based on form
+            $table->string('student_id'); // Required based on form
             $table->string('medium');
             $table->string('guardian_name');
             $table->string('guardian_contact_number');
