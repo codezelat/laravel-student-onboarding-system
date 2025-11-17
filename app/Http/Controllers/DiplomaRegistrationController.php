@@ -41,7 +41,15 @@ class DiplomaRegistrationController extends Controller
             'SITC/2025/3B/PC' => 'Diploma in Psychology and Counseling - 3rd Batch',
             'SITC/2025/2B/IT' => 'Diploma in Information Technology',
             'SITC/2025/2B/CSY' => 'Diploma in Cybersecurity and Ethical Hacking',
+
+            // Newly updated diplomas
+            'SITC/2025/3B/EN' => 'Diploma in English - 3rd Batch',
+            'SITC/2025/4B/PC' => 'Diploma in Psychology and Counseling - 4th Batch',
+            'SITC/2025/3B/HR' => 'Diploma in Human Resource Management and Administration - 3rd Batch',
+            'SITC/2025/2B/BM' => 'Diploma in Business Management',
+            'SITC/2025/2B/IT' => 'Diploma in Information Technology',
         ];
+
 
         $registerId = strtoupper($validated['register_id']);
         $parts = explode('/', $registerId);
