@@ -19,6 +19,7 @@ A Laravel-based student onboarding platform for SITC Campus, covering degree and
 - Exam paper submissions list with search, filtering by type, file download, and deletion.
 
 ## Tech Stack
+
 # SITC Student Onboarding System
 
 A Laravel-based onboarding platform for SITC Campus that handles degree and diploma registrations, applicant verification, secure exam paper submission, and admin-only review/export workflows.
@@ -54,12 +55,14 @@ This application provides:
 ## Features
 
 ### Public-facing
+
 - Degree registration with comprehensive personal, contact, academic details, and required documents.
 - Diploma registration with payment slip upload and program resolution from register ID.
 - Registration verification for both degree and diploma applicants.
 - Secure exam paper submission (degree/diploma types).
 
 ### Admin
+
 - Protected dashboard.
 - Degree registrations list with search, filter, Excel export, and bulk document ZIP download.
 - Diploma registrations list with search, filter, and Excel export.
@@ -78,6 +81,7 @@ This application provides:
 ## Architecture Overview
 
 ### Core controllers
+
 - `DegreeRegistrationController` — degree registration, validation, document storage, verification.
 - `DiplomaRegistrationController` — diploma registration, payment slip storage, verification.
 - `ExamPaperSubmissionController` — lecturer paper submission, admin listing, download.
@@ -85,9 +89,11 @@ This application provides:
 - `AdminDiplomaController` — diploma admin list and export.
 
 ### Middleware
+
 - `IsAdmin` — restricts admin access by email address.
 
 ### Views
+
 - `resources/views/degree_registrations` — degree registration form.
 - `resources/views/diploma_registrations` — diploma registration form.
 - `resources/views/view_degree_registrations` — degree verification and details.
@@ -98,6 +104,7 @@ This application provides:
 ## Routes
 
 ### Public routes
+
 - `/` — Landing page.
 - `/degree-register` — Degree registration form.
 - `/diploma-register` — Diploma registration form.
@@ -107,6 +114,7 @@ This application provides:
 - `/login` — Admin login.
 
 ### Admin routes (protected by `auth` and `is_admin`)
+
 - `/admin/dashboard` — Admin dashboard.
 - `/admin/degree-registrations` — Degree registrations list.
 - `/admin/export-degree-registrations` — Degree export (Excel).
@@ -119,24 +127,31 @@ This application provides:
 ## Data Model
 
 ### Degree registrations
+
 Stored in `degree_registrations`:
+
 - Identity and contact details.
 - Academic and guardian details.
 - Program selection and derived program name from register ID.
 - File paths for required documents.
 
 ### Diploma registrations
+
 Stored in `diploma_registrations`:
+
 - Identity and contact details.
 - Derived diploma name from register ID.
 - Payment slip file path.
 
 ### Exam paper submissions
+
 Stored in `exam_paper_submissions`:
+
 - Lecturer details, submission type (degree/diploma), subject information.
 - Exam date and file metadata.
 
 ### Auth users
+
 Stored in `users` (Laravel Breeze).
 
 ## File Storage
@@ -152,16 +167,19 @@ Ensure the public storage symlink exists so admin views and exports can resolve 
 ## Validation Rules
 
 ### Degree registration
+
 - Required fields: register ID, personal info, contact info, academic info.
 - Program selection is validated and also derived from register ID.
 - Documents: PDF/JPG/PNG with a max size of 5MB each.
 
 ### Diploma registration
+
 - Required fields: register ID, personal info, contact info.
 - Payment slip: PDF/JPG/PNG with a max size of 5MB.
 - Diploma name is derived from register ID.
 
 ### Exam paper submission
+
 - Required fields: lecturer name, exam date, submission type.
 - Degree fields for degree submissions; diploma fields for diploma submissions.
 - File types: PDF/DOC/DOCX, max 10MB.
@@ -181,27 +199,33 @@ Create a user with that email in the database before logging in. Public registra
 ## Setup
 
 1. Install PHP dependencies:
+
     ```bash
     composer install
     ```
 
 2. Install frontend dependencies:
+
     ```bash
     npm install
     ```
 
 3. Configure environment:
+
     ```bash
     cp .env.example .env
     ```
+
     Update `.env` for `APP_URL`, database, mail, and storage settings as needed.
 
 4. Generate application key:
+
     ```bash
     php artisan key:generate
     ```
 
 5. Run migrations:
+
     ```bash
     php artisan migrate
     ```
