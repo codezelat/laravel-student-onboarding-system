@@ -6,9 +6,10 @@ use App\Models\DegreeRegistration;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Http\Request;
 
-class DegreeRegistrationsExport implements FromCollection, WithHeadings
+class DegreeRegistrationsExport implements FromCollection, WithHeadings, WithMapping
 {
     protected $request;
 
@@ -34,39 +35,48 @@ class DegreeRegistrationsExport implements FromCollection, WithHeadings
             $query->where('degree_program_name', $this->request->input('degree'));
         }
 
-        return $query->orderBy('created_at', 'desc')->get([
-            'register_id',
-            'degree_program_name',
-            'full_name',
-            'name_with_initials',
-            'gender',
-            'date_of_birth',
-            'national_id_number',
-            'email',
-            'permanent_address',
-            'postal_code',
-            'district',
-            'home_contact_number',
-            'whatsapp_number',
-            'student_id',
-            'medium',
-            'guardian_name',
-            'guardian_contact_number',
-            'disability',
-            'passport_number',
-            'first_choice',
-            'country_residence',
-            'country_birth',
-            'nationality',
-            'ol_result_sheet',
-            'al_result_sheet',
-            'id_card_copy',
-            'it_certificate',
-            'application_form',
-            'passport_photo',
-            'payment_slip',
-            'created_at'
-        ]);
+        return $query->orderBy('created_at', 'desc')->get();
+    }
+
+    public function map($registration): array
+    {
+        // Generate the full download all documents URL
+        $downloadAllUrl = route('admin.degree_registrations.download_all', $registration->id);
+        
+        return [
+            $registration->register_id,
+            $registration->degree_program_name,
+            $registration->full_name,
+            $registration->name_with_initials,
+            $registration->gender,
+            $registration->date_of_birth,
+            $registration->national_id_number,
+            $registration->email,
+            $registration->permanent_address,
+            $registration->postal_code,
+            $registration->district,
+            $registration->home_contact_number,
+            $registration->whatsapp_number,
+            $registration->student_id,
+            $registration->medium,
+            $registration->guardian_name,
+            $registration->guardian_contact_number,
+            $registration->disability,
+            $registration->passport_number,
+            $registration->first_choice,
+            $registration->country_residence,
+            $registration->country_birth,
+            $registration->nationality,
+            $registration->ol_result_sheet ? asset('storage/' . $registration->ol_result_sheet) : '',
+            $registration->al_result_sheet ? asset('storage/' . $registration->al_result_sheet) : '',
+            $registration->id_card_copy ? asset('storage/' . $registration->id_card_copy) : '',
+            $registration->it_certificate ? asset('storage/' . $registration->it_certificate) : '',
+            $registration->application_form ? asset('storage/' . $registration->application_form) : '',
+            $registration->passport_photo ? asset('storage/' . $registration->passport_photo) : '',
+            $registration->payment_slip ? asset('storage/' . $registration->payment_slip) : '',
+            $registration->created_at,
+            $downloadAllUrl,
+        ];
     }
 
     public function headings(): array
@@ -102,7 +112,8 @@ class DegreeRegistrationsExport implements FromCollection, WithHeadings
             'Application Form',
             'Passport Photo',
             'Payment Slip',
-            'Submitted At'
+            'Submitted At',
+            'Download All Documents (ZIP)'
         ];
     }
 }
