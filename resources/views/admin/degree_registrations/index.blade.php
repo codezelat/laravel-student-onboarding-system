@@ -123,6 +123,13 @@
                                                 <li><a href="{{ asset('storage/' . $registration->payment_slip) }}" target="_blank" class="underline">Payment Slip</a></li>
                                             </ul>
 
+                                            <div class="mt-4">
+                                                <a href="{{ route('admin.degree_registrations.download_all', $registration->id) }}" 
+                                                   class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-medium">
+                                                    Download All Documents (ZIP)
+                                                </a>
+                                            </div>
+
                                             <div class="mt-6 text-right">
                                                 <button @click="open = false" class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded">Close</button>
                                             </div>

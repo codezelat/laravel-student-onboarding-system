@@ -56,6 +56,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::delete('/admin/diploma-registrations/{id}', [AdminDiplomaController::class, 'destroy'])->name('admin.registrations.destroy');
     Route::get('/admin/degree-registrations', [AdminDegreeController::class, 'index'])->name('admin.degree_registrations');
     Route::get('/admin/export-degree-registrations', [AdminDegreeController::class, 'export'])->name('admin.degree_registrations.export');
+    Route::get('/admin/degree-registrations/{id}/download-all', [AdminDegreeController::class, 'downloadAllDocuments'])->name('admin.degree_registrations.download_all');
     Route::delete('/admin/degree-registrations/{id}', [AdminDegreeController::class, 'destroy'])->name('admin.degree_registrations.destroy');
     Route::get('/admin/exam-paper-submissions', [ExamPaperSubmissionController::class, 'adminIndex'])->name('admin.exam.index');
     Route::get('/admin/exam-paper-submissions/{id}/download', [ExamPaperSubmissionController::class, 'adminDownload'])->name('admin.exam.download');
