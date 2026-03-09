@@ -37,26 +37,10 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
                             </div>
-                            <input type="text" name="register_id" id="register_id" value="{{ old('register_id') }}" placeholder="Enter your assigned ID (e.g., HRM01)" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" required>
+                            <input type="text" name="register_id" id="register_id" value="{{ old('register_id') }}" placeholder="Enter your assigned ID (e.g., SITC/2026/2B/CY001)" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" required>
                         </div>
                         @error('register_id') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-                        <p class="text-xs text-gray-500 mt-1">Your ID should be provided in your acceptance letter.</p>
-                    </div>
-
-                    {{-- Hidden field to store the resolved diploma name --}}
-                    <input type="hidden" name="diploma_name" id="diploma_name" value="{{ old('diploma_name') }}">
-
-                    {{-- Diploma Display Area --}}
-                    <div class="md:col-span-2">
-                        <div id="diplomaNameContainer" class="mt-2 p-4 bg-blue-50 border border-blue-200 text-blue-800 text-sm rounded-lg transition-all duration-300 ease-in-out opacity-0 h-0 overflow-hidden" role="alert">
-                            <div class="flex items-start"> {{-- Use items-start for better alignment if text wraps --}}
-                                <svg class="w-5 h-5 mr-2 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1v-3a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                <div>
-                                    <span class="font-medium">Selected Programme:</span>
-                                     <span id="diplomaNameDisplay" class="ml-1">{{ old('diploma_name') }}</span>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Use the format provided in your acceptance letter (e.g., SITC/2026/2B/CY001).</p>
                     </div>
                 </div>
             </div>
@@ -270,86 +254,6 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // --- Handle Register ID and Diploma Name ---
-    const registerIdField = document.querySelector('#register_id');
-    const diplomaNameField = document.querySelector('#diploma_name');
-    const diplomaNameDisplay = document.querySelector('#diplomaNameDisplay');
-    const diplomaNameContainer = document.querySelector('#diplomaNameContainer');
-    const initialDiplomaName = diplomaNameField.value; // From old input
-
-    const diplomaMap = {
-        'EN': 'Diploma in English (SITC/2025/2B/EN...)',
-        'HRM': 'Diploma in Human Resource Management and Administration (SITC/2025/2B/HR...)',
-        'BM': 'Diploma in Business Management (SITC/2025/2B/BM...)',
-        'SC': 'Diploma in Sociology (SITC/2025/2B/SC...)',
-        'PC': 'Diploma in Psychology and Counseling (SITC/2025/2B/PC...)',
-        'IT': 'Diploma in Information Technology (SITC/2025/2B/IT...)',
-        'CSY': 'Diploma in Cybersecurity and Ethical Hacking (SITC/2025/2B/CSY...)'
-    };
-
-    function updateDiplomaDisplay(value) {
-        const upperValue = value.toUpperCase();
-        let foundDiplomaName = '';
-        let bestMatchPrefix = '';
-
-        for (const prefix in diplomaMap) {
-            if (upperValue.startsWith(prefix) && prefix.length > bestMatchPrefix.length) {
-                bestMatchPrefix = prefix;
-            }
-        }
-        foundDiplomaName = bestMatchPrefix ? diplomaMap[bestMatchPrefix] : '';
-
-        diplomaNameField.value = foundDiplomaName;
-        diplomaNameDisplay.textContent = foundDiplomaName;
-
-        // Show/hide the container smoothly using height and opacity
-        if (foundDiplomaName) {
-            if (diplomaNameContainer.classList.contains('h-0')) {
-                diplomaNameContainer.classList.remove('opacity-0', 'h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-                diplomaNameContainer.classList.add('opacity-100', 'p-4', 'mt-2'); // Restore styles
-                // Force reflow before setting height for transition
-                void diplomaNameContainer.offsetWidth;
-                diplomaNameContainer.style.height = diplomaNameContainer.scrollHeight + 'px';
-            }
-        } else {
-            if (!diplomaNameContainer.classList.contains('h-0')) {
-                diplomaNameContainer.style.height = '0px';
-                diplomaNameContainer.classList.remove('opacity-100');
-                diplomaNameContainer.classList.add('opacity-0');
-
-                // After transition, fully hide
-                setTimeout(() => {
-                    if (!diplomaNameField.value) { // Check again
-                       diplomaNameContainer.classList.add('h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-                       diplomaNameContainer.classList.remove('p-4', 'mt-2');
-                    }
-                }, 300); // Match transition duration
-            }
-        }
-    }
-
-    // Initial check on page load
-    const initialRegisterIdValue = registerIdField.value;
-     if (initialDiplomaName) {
-         diplomaNameDisplay.textContent = initialDiplomaName;
-         diplomaNameContainer.classList.remove('opacity-0', 'h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-         diplomaNameContainer.classList.add('opacity-100', 'p-4', 'mt-2');
-         // Set height after ensuring it's visible
-         requestAnimationFrame(() => {
-            diplomaNameContainer.style.height = diplomaNameContainer.scrollHeight + 'px';
-         });
-     } else if (initialRegisterIdValue) {
-        updateDiplomaDisplay(initialRegisterIdValue);
-    } else {
-        // Ensure it starts fully hidden if no initial value
-        diplomaNameContainer.classList.add('opacity-0', 'h-0', 'overflow-hidden', 'p-0', 'border-0', 'mt-0');
-        diplomaNameContainer.style.height = '0px';
-    }
-
-    registerIdField.addEventListener('input', function () {
-        updateDiplomaDisplay(this.value);
-    });
-
     // --- Handle File Input Display ---
     const fileInput = document.getElementById('payment_slip');
     const fileNameDisplay = document.getElementById('file-name-display');
