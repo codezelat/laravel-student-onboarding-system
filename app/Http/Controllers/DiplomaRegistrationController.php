@@ -31,7 +31,7 @@ class DiplomaRegistrationController extends Controller
             'payment_slip' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120', // ✅ Add validation for file too (5MB max)
         ]);
 
-        // ✅ Map diplomas
+        // Map diplomas
         $diplomaMap = [
             'SITC/2025/2B/EN' => 'Diploma in English',
             'SITC/2025/2B/HR' => 'Diploma in Human Resource Management and Administration',
@@ -41,13 +41,14 @@ class DiplomaRegistrationController extends Controller
             'SITC/2025/3B/PC' => 'Diploma in Psychology and Counseling - 3rd Batch',
             'SITC/2025/2B/IT' => 'Diploma in Information Technology',
             'SITC/2025/2B/CSY' => 'Diploma in Cybersecurity and Ethical Hacking',
-
-            // Newly updated diplomas
             'SITC/2025/3B/EN' => 'Diploma in English - 3rd Batch',
             'SITC/2025/4B/PC' => 'Diploma in Psychology and Counseling - 4th Batch',
             'SITC/2025/3B/HR' => 'Diploma in Human Resource Management and Administration - 3rd Batch',
             'SITC/2025/2B/BM' => 'Diploma in Business Management',
             'SITC/2025/2B/IT' => 'Diploma in Information Technology',
+
+            // Newly added for 2026
+            'SITC/2026/2B/CY' => 'Diploma in Cybersecurity and Ethical Hacking',
         ];
 
 
