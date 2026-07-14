@@ -49,6 +49,7 @@ class DiplomaRegistrationController extends Controller
 
             // Newly added for 2026
             'SITC/2026/2B/CY' => 'Diploma in Cybersecurity and Ethical Hacking',
+            'SITC/2026/4B/EN' => 'Diploma in English - 4th Batch',
         ];
 
 
