@@ -24,8 +24,8 @@ class AdminDiplomaController extends Controller
         }
 
         // Filter by diploma
-        if ($request->filled('diploma')) {
-            $query->where('diploma_name', $request->input('diploma'));
+        if ($request->filled('diploma_name')) {
+            $query->where('diploma_name', $request->input('diploma_name'));
         }
 
         // Pagination

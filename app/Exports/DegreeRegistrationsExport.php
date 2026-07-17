@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Http\Request;
+use App\Support\LocalDateTime;
 
 class DegreeRegistrationsExport implements FromCollection, WithHeadings, WithMapping
 {
@@ -74,7 +75,7 @@ class DegreeRegistrationsExport implements FromCollection, WithHeadings, WithMap
             $registration->application_form ? asset('storage/' . $registration->application_form) : '',
             $registration->passport_photo ? asset('storage/' . $registration->passport_photo) : '',
             $registration->payment_slip ? asset('storage/' . $registration->payment_slip) : '',
-            $registration->created_at,
+            LocalDateTime::format($registration->created_at, 'Y-m-d H:i:s', ''),
             $downloadAllUrl,
         ];
     }

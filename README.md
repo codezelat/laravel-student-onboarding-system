@@ -217,6 +217,12 @@ Create a user with that email in the database before logging in. Public registra
     ```
 
     Update `.env` for `APP_URL`, database, mail, and storage settings as needed.
+    Keep stored timestamps in UTC and configure the user-facing timezone separately:
+
+    ```env
+    APP_TIMEZONE=UTC
+    APP_DISPLAY_TIMEZONE=Asia/Colombo
+    ```
 
 4. Generate application key:
 

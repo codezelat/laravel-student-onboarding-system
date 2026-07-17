@@ -56,7 +56,7 @@
                                 <td class="px-4 py-3 text-sm text-blue-600">
                                     <a href="{{ route('admin.exam.download', $submission->id) }}" target="_blank" class="underline">Download</a>
                                 </td>
-                                <td class="px-4 py-3 text-sm text-gray-500">{{ $submission->created_at->format('Y-m-d H:i') }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-500">{{ \App\Support\LocalDateTime::format($submission->created_at) }}</td>
                                 <td class="px-4 py-3 text-sm text-indigo-600">
                                     <button @click="open = true" class="underline">View More</button>
                                     <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
@@ -72,7 +72,7 @@
                                                 <p><strong>Original Filename:</strong> {{ $submission->original_filename }}</p>
                                                 <p><strong>File Type:</strong> {{ $submission->mime_type }}</p>
                                                 <p><strong>File Size:</strong> {{ number_format($submission->file_size / 1024, 2) }} KB</p>
-                                                <p><strong>Submitted:</strong> {{ $submission->created_at->format('Y-m-d H:i') }}</p>
+                                                <p><strong>Submitted (Colombo):</strong> {{ \App\Support\LocalDateTime::format($submission->created_at) }}</p>
                                             </div>
                                             <hr class="my-6">
                                             <div class="mt-4">

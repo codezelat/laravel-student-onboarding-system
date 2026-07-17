@@ -6,9 +6,11 @@ use App\Models\DiplomaRegistration;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Http\Request;
+use App\Support\LocalDateTime;
 
-class DiplomaRegistrationsExport implements FromCollection, WithHeadings
+class DiplomaRegistrationsExport implements FromCollection, WithHeadings, WithMapping
 {
     protected $request;
 
@@ -61,6 +63,22 @@ class DiplomaRegistrationsExport implements FromCollection, WithHeadings
             'Email',
             'WhatsApp',
             'Submitted At'
+        ];
+    }
+
+    public function map($registration): array
+    {
+        return [
+            $registration->register_id,
+            $registration->diploma_name,
+            $registration->full_name,
+            $registration->name_with_initials,
+            $registration->national_id_number,
+            $registration->date_of_birth,
+            $registration->gender,
+            $registration->email,
+            $registration->whatsapp_number,
+            LocalDateTime::format($registration->created_at, 'Y-m-d H:i:s', ''),
         ];
     }
 }
