@@ -41,7 +41,9 @@ class AdminDiplomaController extends Controller
 
     public function export(Request $request)
     {
-        return Excel::download(new DiplomaRegistrationsExport($request), 'registrations.xlsx');
+        $filename = 'diploma-registrations-' . now()->format('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(new DiplomaRegistrationsExport($request), $filename);
     }
 
     public function destroy($id)
